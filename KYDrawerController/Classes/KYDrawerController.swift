@@ -246,13 +246,26 @@ open class KYDrawerController: UIViewController, UIGestureRecognizerDelegate {
         super.init(nibName: nil, bundle: nil)
         self.drawerDirection = drawerDirection
         self.drawerWidth     = drawerWidth
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationHandlerOpen), name: NSNotification.Name(rawValue: "openDrawer"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationHandlerClose), name: NSNotification.Name(rawValue: "closeDrawer"), object: nil)
+    }
+    
+    func notificationHandlerOpen() {
+        self.setDrawerState(.opened, animated: true)
+    }
+    
+    func notificationHandlerClose() {
+        self.setDrawerState(.closed, animated: true)
     }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     /**************************************************************************/
     // MARK: - Life Cycle
