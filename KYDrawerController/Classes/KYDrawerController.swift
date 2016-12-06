@@ -261,6 +261,9 @@ open class KYDrawerController: UIViewController, UIGestureRecognizerDelegate {
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationHandlerOpen), name: NSNotification.Name(rawValue: "openDrawer"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationHandlerClose), name: NSNotification.Name(rawValue: "closeDrawer"), object: nil)
     }
     
     deinit {
