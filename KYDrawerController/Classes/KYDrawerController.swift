@@ -26,6 +26,9 @@ import UIKit
     @objc optional func drawerController(_ drawerController: KYDrawerController, stateChanged state: KYDrawerController.DrawerState)
 }
 
+public let DrawerOpenNotification = "DrawerOpenNotification"
+public let DrawerCloseNotification = "DrawerCloseNotification"
+
 open class KYDrawerController: UIViewController, UIGestureRecognizerDelegate {
     
     /**************************************************************************/
@@ -247,8 +250,8 @@ open class KYDrawerController: UIViewController, UIGestureRecognizerDelegate {
         self.drawerDirection = drawerDirection
         self.drawerWidth     = drawerWidth
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationHandlerOpen), name: NSNotification.Name(rawValue: "openDrawer"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationHandlerClose), name: NSNotification.Name(rawValue: "closeDrawer"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationHandlerOpen), name: NSNotification.Name(rawValue: DrawerOpenNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationHandlerClose), name: NSNotification.Name(rawValue: DrawerCloseNotification), object: nil)
     }
     
     func notificationHandlerOpen() {
@@ -262,12 +265,8 @@ open class KYDrawerController: UIViewController, UIGestureRecognizerDelegate {
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationHandlerOpen), name: NSNotification.Name(rawValue: "openDrawer"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationHandlerClose), name: NSNotification.Name(rawValue: "closeDrawer"), object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationHandlerOpen), name: NSNotification.Name(rawValue: DrawerOpenNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationHandlerClose), name: NSNotification.Name(rawValue: DrawerCloseNotification), object: nil)
     }
     
     /**************************************************************************/
